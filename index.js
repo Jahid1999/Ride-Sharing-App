@@ -1,6 +1,7 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const mysql = require('mysql');
+const path = require('path');
 
 //Create Connection
 
@@ -22,59 +23,17 @@ db.connect((err) => {
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Welcome Ride Share');
-});
+const logger = (req, res, next) => {
+    console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
+    next();
+};
 
-//Create database
-app.get('/createDB', (req, res) => {
-    let query = 'CREATE DATABASE ride_share';
-    db.query(query, (err, result) => {
-        if(err) 
-            throw err;
-        console.log(result);
-        res.send('Database Created');
-    })
-});
+app.use(logger);
 
-//Create Rider Table
-app.get('/createRiderTable', (req, res) => {
-    let query = 'CREATE TABLE rider(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), current_location POINT)';
-    db.query(query, (err, result) => {
-        if(err) 
-            throw err;
-        console.log(result);
-        res.send('Rider Table Created');
-    })
-});
-
-//Create Driver Table
-app.get('/createDriverTable', (req, res) => {
-    let query = 'CREATE TABLE driver(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name varchar(255), car varchar(255), current_location POINT)';
-    db.query(query, (err, result) => {
-        if(err) 
-            throw err;
-        console.log(result);
-        res.send('Driver Table Created');
-    })
-});
-
-//Create  a Rider
-app.get('/create/rider', (req, res) => {
-    let rider = {
-        name: 'Jahid',
-        // current_location: POINT( req.body.current_locationX,req.body.current_locationY),
-        current_location: GeomFromText('POINT(18 23)'),
-    }
-
-    let query = 'INSERT INTO rider SET ?';
-    db.query(query, rider, (err, result) => {
-        if(err) 
-            throw err;
-        console.log(result);
-        res.send('Rider Created');
-    })
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
+app.use('/api', require('./routes/root'));
+app.use('/api', require('./routes/driver'));
 
 const PORT = process.env.PORT || 5000;
 
