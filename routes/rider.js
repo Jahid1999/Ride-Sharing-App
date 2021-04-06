@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const riders = require('../Riders');
 
 // //Create Rider Table
 
@@ -12,5 +13,11 @@ const router = express.Router();
 //         res.send('Rider Table Created');
 //     })
 // });
+
+// Get Riders
+router.get('/riders', (req, res) => {
+    res.status(200).json(riders);
+})
+
 
 module.exports = router;
