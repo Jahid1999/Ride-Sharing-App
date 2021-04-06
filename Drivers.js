@@ -3,28 +3,28 @@ const drivers = [
         id: 1,
         name: "Jahid",
         car: "ABC",
-        currentX: 1,
+        currentX: 3,
         currentY: 5,
     },
     {
         id: 2,
         name: "Anik",
         car: "Abc",
-        currentX: 10,
+        currentX: 121,
         currentY: 52,
     },
     {
         id: 3,
         name: "Aakif",
         car: "bsdjv",
-        currentX: 11,
+        currentX: 31,
         currentY: 15,
     },
     {
         id: 4,
         name: "Jahid",
         car: "ABC",
-        currentX: 13,
+        currentX: 3,
         currentY: 5,
     },
     {
@@ -38,7 +38,7 @@ const drivers = [
         id: 6,
         name: "Aakif",
         car: "bsdjv",
-        currentX: 13,
+        currentX: 9,
         currentY: 51,
     }
 ]
