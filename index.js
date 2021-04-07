@@ -13,12 +13,13 @@ const io = require('socket.io')(http)
 io.of('communication').on('connection', (socket)=>{
     console.log("new user connected")
     const job = sch.scheduleJob('*/5 * * * * *', function(){
-        var matchedDriverIndex;
-    
-        var distance = Number.MAX_VALUE;
-        let rIn = -1;
-        let dIn = -1;
+        makePair(socket);
+    });
+})
 
+function makePair(socket) {
+    let rIn = -1;
+        let dIn = -1;
         riders.forEach((rider) => {
             rIn +=1;
             let mdIn;
@@ -52,8 +53,8 @@ io.of('communication').on('connection', (socket)=>{
 
         })
         socket.emit("welcome",pairs);
-    });
-})
+        pairs.length = 0;
+}
 
 //Create Connection
 const db = mysql.createConnection({
