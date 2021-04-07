@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const drivers = require('../Drivers');
-const riders = require('../Riders');
+const drivers = require('../models/Drivers');
+const riders = require('../models/Riders');
 
 router.get('/', (req, res) => {
     res.send('Welcome Ride Share');

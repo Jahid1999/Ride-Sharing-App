@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const drivers = require('../Drivers');
+const drivers = require('../models/Drivers');
 
 // //Create Driver Table
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const riders = require('../Riders');
+const riders = require('../models/Riders');
 
 // //Create Rider Table
 
@@ -17,6 +17,21 @@ const riders = require('../Riders');
 // Get Riders
 router.get('/riders', (req, res) => {
     res.status(200).json(riders);
+})
+
+// Add Rider Request
+router.post('/rider', (req, res) => {
+    const newRider = {
+        id: 5,
+        name: req.body.name,
+        currentX: req.body.currentX,
+        currentY:req.body.currentY,
+        destinationX: req.body.destinationX,
+        destinationY: req.body.destinationY,
+    }
+    riders.push(newRider);
+    res.status(201).json(newRider);
+
 })
 
 

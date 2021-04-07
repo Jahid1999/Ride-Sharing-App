@@ -2,7 +2,6 @@ const riders = [
     {
         id: 1,
         name: "Jahid",
-        car: "ABC",
         currentX: 1,
         currentY: 5,
         destinationX: 34,
@@ -11,7 +10,6 @@ const riders = [
     {
         id: 2,
         name: "Anik",
-        car: "Abc",
         currentX: 10,
         currentY: 52,
         destinationX: 35,
@@ -20,7 +18,6 @@ const riders = [
     {
         id: 3,
         name: "Aakif",
-        car: "bsdjv",
         currentX: 11,
         currentY: 15,
         destinationX: 35,
@@ -29,7 +26,6 @@ const riders = [
     {
         id: 4,
         name: "Jahid",
-        car: "ABC",
         currentX: 13,
         currentY: 5,
         destinationX: 35,
@@ -38,7 +34,6 @@ const riders = [
     {
         id: 5,
         name: "Anik",
-        car: "Abc",
         currentX: 1,
         currentY: 1,
         destinationX: 35,
@@ -47,7 +42,6 @@ const riders = [
     {
         id: 6,
         name: "Aakif",
-        car: "bsdjv",
         currentX: 13,
         currentY: 51,
         destinationX: 35,

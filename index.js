@@ -4,8 +4,8 @@ const mysql = require('mysql');
 const path = require('path');
 const http = require('http').createServer()
 const sch = require('node-schedule')
-const drivers = require('./Drivers');
-const riders = require('./Riders');
+const drivers = require('./models/Drivers');
+const riders = require('./models/Riders');
 
 const io = require('socket.io')(http)
 
@@ -67,6 +67,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use('/api', require('./routes/root'));
 app.use('/api', require('./routes/driver'));
+app.use('/api', require('./routes/rider'));
 
 
 const Sckt = 9001;
