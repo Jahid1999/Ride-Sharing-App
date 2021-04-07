@@ -32,20 +32,21 @@ const fetchAllRiders = {
 
 const reqRider = http.request(fetchAllRiders, res => {
     console.log(`statusCode: ${res.statusCode} \n`)
-    let data = '';
+    let requestData = '';
 
     res.on('data', (chunk) => {
-        data += chunk;
+        requestData += chunk;
     });
 
     res.on('end', () => {
-        console.log(JSON.parse(data));
+        console.log(JSON.parse(requestData));
     });
 
 }).on("error", (err) => {
     console.log("Error: ", err.message);
 })
-reqRider.end()
+reqRider.write(requestData);
+reqRider.end();
 
 // const job = sch.scheduleJob('*/1 * * * * *', function(){
    

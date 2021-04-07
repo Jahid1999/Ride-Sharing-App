@@ -24,52 +24,34 @@ io.of('communication').on('connection', (socket)=>{
             let mdIn;
             let shortest =  Number.MAX_VALUE;
             dIn = -1;
-            drivers.forEach((driver)=> {
-                dIn +=1;
-                let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
-                cost = 2*distance
-                if(distance < shortest)
-                {
-                    shortest = distance;
-                    mdIn = dIn;
-                }
-                    
-            })
-            var match = {
-                "riderName" : rider.name,
-                "driverName" : drivers[mdIn].name,
-                "carNumber" : drivers[mdIn].car,
-                "cost" : cost
-              };
-          
-              pairs.push(match);
-              console.log(`Rider ${match.riderName} matches with ${match.driverName} car ${match.carNumber} fare is ${match.cost}`);
-              drivers.splice(mdIn, 1);
-              if(!drivers.length)
-                socket.emit("welcome",pairs);
+            if(drivers.length) {
+                drivers.forEach((driver)=> {
+                    dIn +=1;
+                    let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
+                    cost = 2*distance
+                    if(distance < shortest)
+                    {
+                        shortest = distance;
+                        mdIn = dIn;
+                    }
+                        
+                })
+                var match = {
+                    "riderName" : rider.name,
+                    "driverName" : drivers[mdIn].name,
+                    "carNumber" : drivers[mdIn].car,
+                    "cost" : cost
+                  };
+              
+                  pairs.push(match);
+                  console.log(`Rider ${match.riderName} matches with ${match.driverName} car ${match.carNumber} fare is ${match.cost}`);
+                  drivers.splice(mdIn, 1);
+                  riders.splice(rIn, 1);
+
+            }
+
         })
-        
-        // let shortest = 100000000000;
-        // let Frider = {};
-        // let Fdriver = {}
-        // let cost = 0
-        // riders.forEach((rider) => {
-        //     drivers.forEach((driver)=> {
-        //         let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
-        //         cost = 2*distance
-        //         if(distance < shortest)
-        //         {
-        //             shortest = distance;
-        //             Frider = rider;
-        //             Fdriver = driver;
-        //         }
-                    
-        //     })
-        // })
-        // riders.splice(riders.indexOf(Frider));
-        // drivers.splice(drivers.indexOf(Fdriver));
-        // console.log(`Rider ${Frider.name} matches with ${Fdriver.name}`);
-        // socket.emit("welcome",`Rider ${Frider.name} matches with ${Fdriver.name} and the cost is ${cost}`)
+        socket.emit("welcome",pairs);
     });
 })
 
