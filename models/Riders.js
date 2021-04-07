@@ -25,7 +25,7 @@ const riders = [
     },
     {
         id: 4,
-        name: "Jahid",
+        name: "Jahid1",
         currentX: 13,
         currentY: 5,
         destinationX: 35,
@@ -33,7 +33,7 @@ const riders = [
     },
     {
         id: 5,
-        name: "Anik",
+        name: "Anik1",
         currentX: 1,
         currentY: 1,
         destinationX: 35,
@@ -41,7 +41,7 @@ const riders = [
     },
     {
         id: 6,
-        name: "Aakif",
+        name: "Aakif1",
         currentX: 13,
         currentY: 51,
         destinationX: 35,

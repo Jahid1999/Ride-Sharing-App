@@ -22,6 +22,7 @@ router.get('/riders', (req, res) => {
 
 // Add Rider Request
 router.post('/rider', (req, res) => {
+    console.log('ashci--');
     const newRider = {
         id: uuid.v4(),
         name: req.body.name,

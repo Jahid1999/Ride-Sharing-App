@@ -6,38 +6,74 @@ const http = require('http').createServer()
 const sch = require('node-schedule')
 const drivers = require('./models/Drivers');
 const riders = require('./models/Riders');
+const pairs = require('./models/Pairs');
 
 const io = require('socket.io')(http)
 
 io.of('communication').on('connection', (socket)=>{
     console.log("new user connected")
     const job = sch.scheduleJob('*/5 * * * * *', function(){
-        let shortest = 100000000000;
-        let Frider = {};
-        let Fdriver = {}
-        let cost = 0
+        var matchedDriverIndex;
+    
+        var distance = Number.MAX_VALUE;
+        let rIn = -1;
+        let dIn = -1;
+
         riders.forEach((rider) => {
+            rIn +=1;
+            let mdIn;
+            let shortest =  Number.MAX_VALUE;
+            dIn = -1;
             drivers.forEach((driver)=> {
+                dIn +=1;
                 let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
                 cost = 2*distance
                 if(distance < shortest)
                 {
                     shortest = distance;
-                    Frider = rider;
-                    Fdriver = driver;
+                    mdIn = dIn;
                 }
                     
             })
+            var match = {
+                "riderName" : rider.name,
+                "driverName" : drivers[mdIn].name,
+                "carNumber" : drivers[mdIn].car,
+                "cost" : cost
+              };
+          
+              pairs.push(match);
+              console.log(`Rider ${match.riderName} matches with ${match.driverName} car ${match.carNumber} fare is ${match.cost}`);
+              drivers.splice(mdIn, 1);
+              if(!drivers.length)
+                socket.emit("welcome",pairs);
         })
-        riders.splice(riders.indexOf(Frider));
-        drivers.splice(drivers.indexOf(Fdriver));
-        console.log(`Rider ${Frider.name} matches with ${Fdriver.name}`);
-        socket.emit("welcome",`Rider ${Frider.name} matches with ${Fdriver.name} and the cost is ${cost}`)
+        
+        // let shortest = 100000000000;
+        // let Frider = {};
+        // let Fdriver = {}
+        // let cost = 0
+        // riders.forEach((rider) => {
+        //     drivers.forEach((driver)=> {
+        //         let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
+        //         cost = 2*distance
+        //         if(distance < shortest)
+        //         {
+        //             shortest = distance;
+        //             Frider = rider;
+        //             Fdriver = driver;
+        //         }
+                    
+        //     })
+        // })
+        // riders.splice(riders.indexOf(Frider));
+        // drivers.splice(drivers.indexOf(Fdriver));
+        // console.log(`Rider ${Frider.name} matches with ${Fdriver.name}`);
+        // socket.emit("welcome",`Rider ${Frider.name} matches with ${Fdriver.name} and the cost is ${cost}`)
     });
 })
 
 //Create Connection
-
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -46,7 +82,6 @@ const db = mysql.createConnection({
 });
 
 //Connect 
-
 db.connect((err) => {
     if(err) {
         throw err;
@@ -70,7 +105,7 @@ app.use('/api', require('./routes/driver'));
 app.use('/api', require('./routes/rider'));
 
 
-const Sckt = 9001;
+const Sckt = 5001;
 const PORT = process.env.PORT || 5000;
 
 http.listen(Sckt,()=>{
