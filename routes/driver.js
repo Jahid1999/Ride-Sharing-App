@@ -63,6 +63,7 @@ router.post('/driver', (req, res) => {
         currentY:req.body.currentY,
     }
     drivers.push(newDriver);
+    console.log(`Driver ${newDriver.name} is looking for a Rider....`);
     res.status(201).json(newDriver);
 
 })

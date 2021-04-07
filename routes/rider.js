@@ -22,7 +22,6 @@ router.get('/riders', (req, res) => {
 
 // Add Rider Request
 router.post('/rider', (req, res) => {
-    console.log('ashci--');
     const newRider = {
         id: uuid.v4(),
         name: req.body.name,
@@ -32,6 +31,7 @@ router.post('/rider', (req, res) => {
         destinationY: req.body.destinationY,
     }
     riders.push(newRider);
+    console.log(`Rider ${newRider.name} is looking for a Driver....`);
     res.status(201).json(newRider);
 
 })

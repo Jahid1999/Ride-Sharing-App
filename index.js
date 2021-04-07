@@ -44,7 +44,7 @@ io.of('communication').on('connection', (socket)=>{
                   };
               
                   pairs.push(match);
-                  console.log(`Rider ${match.riderName} matches with ${match.driverName} car ${match.carNumber} fare is ${match.cost}`);
+                  console.log(`Rider ${match.riderName} matches with driver ${match.driverName}, car number ${match.carNumber}. Toatl fare = ${match.cost}`);
                   drivers.splice(mdIn, 1);
                   riders.splice(rIn, 1);
 
@@ -74,7 +74,7 @@ db.connect((err) => {
 const app = express();
 
 const logger = (req, res, next) => {
-    console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
+    // console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
     next();
 };
 
