@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const drivers = require('../models/Drivers');
+const uuid = require('uuid');
 
 // //Create Driver Table
 
@@ -50,6 +51,20 @@ router.post('/ratings', (req, res) => {
 // Get Drivers
 router.get('/drivers', (req, res) => {
     res.status(200).json(drivers);
+})
+
+// Add Driver Request
+router.post('/driver', (req, res) => {
+    const newDriver = {
+        id: uuid.v4(),
+        name: req.body.name,
+        car: req.body.name,
+        currentX: req.body.currentX,
+        currentY:req.body.currentY,
+    }
+    drivers.push(newDriver);
+    res.status(201).json(newDriver);
+
 })
 
 

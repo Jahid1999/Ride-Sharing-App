@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const riders = require('../models/Riders');
+const uuid = require('uuid');
 
 // //Create Rider Table
 
@@ -22,7 +23,7 @@ router.get('/riders', (req, res) => {
 // Add Rider Request
 router.post('/rider', (req, res) => {
     const newRider = {
-        id: 5,
+        id: uuid.v4(),
         name: req.body.name,
         currentX: req.body.currentX,
         currentY:req.body.currentY,
