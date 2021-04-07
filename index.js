@@ -4,13 +4,35 @@ const mysql = require('mysql');
 const path = require('path');
 const http = require('http').createServer()
 const sch = require('node-schedule')
+const drivers = require('./Drivers');
+const riders = require('./Riders');
 
 const io = require('socket.io')(http)
 
 io.of('communication').on('connection', (socket)=>{
     console.log("new user connected")
     const job = sch.scheduleJob('*/5 * * * * *', function(){
-        socket.emit("welcome","User is connected")
+        let shortest = 100000000000;
+        let Frider = {};
+        let Fdriver = {}
+        let cost = 0
+        riders.forEach((rider) => {
+            drivers.forEach((driver)=> {
+                let distance = Math.sqrt( Math.pow((driver.currentX-rider.currentX), 2) + Math.pow((driver.currentY - rider.currentY), 2) );
+                cost = 2*distance
+                if(distance < shortest)
+                {
+                    shortest = distance;
+                    Frider = rider;
+                    Fdriver = driver;
+                }
+                    
+            })
+        })
+        riders.splice(riders.indexOf(Frider));
+        drivers.splice(drivers.indexOf(Fdriver));
+        console.log(`Rider ${Frider.name} matches with ${Fdriver.name}`);
+        socket.emit("welcome",`Rider ${Frider.name} matches with ${Fdriver.name} and the cost is ${cost}`)
     });
 })
 

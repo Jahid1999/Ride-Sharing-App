@@ -20,7 +20,7 @@ const fetchAllRiders = {
 
 const reqRider = http.request(fetchAllRiders, res => {
     console.log(`statusCode: ${res.statusCode} \n`)
-    console.log(res)
+    console.log(res.data)
     console.log("we are good to go")
 })
 reqRider.end()

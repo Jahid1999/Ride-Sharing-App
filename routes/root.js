@@ -35,6 +35,7 @@ router.get('/communication', (req, res) => {
                 
         })
     })
+    console.log(`Rider ${Frider.name} matches with ${Fdriver.name}`);
     res.status(200).json({msg: `Rider ${Frider.name} matches with ${Fdriver.name}`});
 });
 
