@@ -27,25 +27,6 @@ router.get('/createDriverRatingTable', (req, res) => {
         res.send('Driver Rating Table Created');
     })
 });
-//Store Rating
-router.post('/ratings', (req, res) => {
-
-    // name: req.body.name
-    // car: req.body.car
-    // rating: req.body.rating
-
-
-// let query = "INSERT INTO ratings (name, car, rating) VALUES ( ?, ?, ?)";
-// // let query = "INSERT INTO ratings SET ?";
-// db.query(query, [name, car, rating], (err, result) => {
-//     if(err) 
-//         throw err;
-//     console.log(result);
-
-// })
-console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
-res.send('Driver Rating Stored');
-});
 
 // Get Drivers
 router.get('/drivers', (req, res) => {
@@ -57,7 +38,7 @@ router.post('/driver', (req, res) => {
     const newDriver = {
         id: uuid.v4(),
         name: req.body.name,
-        car: req.body.name,
+        car: req.body.car,
         currentX: req.body.currentX,
         currentY:req.body.currentY,
     }

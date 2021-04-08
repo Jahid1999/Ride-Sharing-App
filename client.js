@@ -5,7 +5,7 @@ const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let socket = io.connect('http://localhost:5001/communication')
+let socket = io.connect('http://localhost:5000/communication')
 
 const job = sch.scheduleJob('*/1 * * * * *', function(){
     riderRequest();
@@ -54,7 +54,7 @@ function riderRequest() {
 function driverRequest() {
     requestData = JSON.stringify({
         name: Str.random(6),
-        car:Math.ceil(Math.random() * 10000),
+        car: Math.ceil(Math.random() * 10000),
         currentX: Math.ceil(Math.random() * 100),
         currentY: Math.ceil(Math.random() * 100),
     });
