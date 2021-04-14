@@ -7,5 +7,14 @@ A repository for implementing a **Ride Sharing** app and to make it work as a **
    [Abdullah-Al-Jahid](https://github.com/Jahid1999) (BSSE 1030)
 
 
-**Technology Used:** Node.js , Express.js, Socket.IO, Node Schedule, Http for backend.
+**Technology Used:** 
+1.Node.js,
+
+2.Express.js,
+
+3.Socket.IO,
+
+4.Node Schedule,
+
+5.Http .
 
