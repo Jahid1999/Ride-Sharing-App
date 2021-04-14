@@ -1,11 +1,10 @@
 const io = require('socket.io-client')
 const http = require('http')
-const riders = require('./models/Riders');
 const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let socket = io.connect('http://localhost:5000/communication')
+let socket = io.connect('http://localhost:5002/communication')
 
 const job = sch.scheduleJob('*/1 * * * * *', function(){
     riderRequest();
@@ -24,7 +23,7 @@ function riderRequest() {
     
     const postRiderRequest = {
         hostname: 'localhost',
-        port: 5000,
+        port: 7000,
         path: '/api/rider',
         method: 'POST',
         headers: {
@@ -62,7 +61,7 @@ function driverRequest() {
     
     const postDriverRequest = {
         hostname: 'localhost',
-        port: 5000,
+        port: 7000,
         path: '/api/driver',
         method: 'POST',
         headers: {
@@ -99,8 +98,8 @@ function giveRating(pair) {
     
     const postRatingrRequest = {
         hostname: 'localhost',
-        port: 5000,
-        path: '/api/ratings',
+        port: 7000,
+        path: '/rating',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -127,10 +126,8 @@ function giveRating(pair) {
 }
 
 
-socket.on('welcome',(data)=>{
-    data.forEach(pair => {
-        console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Total fare = ${pair.cost}`);
+socket.on('notify_client',(pair)=>{
+        console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Total cost = ${pair.cost}`);
         giveRating(pair);
-    });
     
 })

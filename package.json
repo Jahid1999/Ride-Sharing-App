@@ -1,25 +1,25 @@
 {
   "name": "Ride-Sharing-App",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A repository for implementing a **Ride Sharing** app and to make it work as a **Distributed System** . It is a group project for academic purpose.",
+  "main": "client.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jahid1999/Ride-Sharing-App.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jahid1999/Ride-Sharing-App/issues"
+  },
+  "homepage": "https://github.com/Jahid1999/Ride-Sharing-App#readme",
   "dependencies": {
     "@supercharge/strings": "^1.18.0",
-    "express": "^4.17.1",
-    "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",
-    "socket.io": "^3.1.2",
-    "socket.io-client": "^4.0.1",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
+    "socket.io-client": "^4.0.1"
   }
 }
