@@ -3,7 +3,7 @@ const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const app = express();
-const http = require('http').createServer(app)
+// const http = require('http').createServer(app)
 
 
 //Create Connection
@@ -58,6 +58,6 @@ const PORT = process.env.PORT || 5001;
 //     console.log(`Socket Running on ${Sckt}`);
 // })
 
-http.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server Running on port: ${PORT}`);
 });

@@ -4,7 +4,7 @@ const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let socket = io.connect('http://localhost:5000/communication')
+let socket = io.connect('http://localhost:5002/communication')
 
 const job = sch.scheduleJob('*/1 * * * * *', function(){
     riderRequest();
@@ -126,10 +126,8 @@ function giveRating(pair) {
 }
 
 
-socket.on('welcome',(data)=>{
-    data.forEach(pair => {
+socket.on('notify_client',(pair)=>{
         console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Total cost = ${pair.cost}`);
         giveRating(pair);
-    });
     
 })

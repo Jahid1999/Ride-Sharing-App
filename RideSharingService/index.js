@@ -3,21 +3,17 @@ const express = require('express');
 // const mysql = require('mysql');
 // const path = require('path');
 const app = express();
-const http = require('http').createServer(app)
-const sch = require('node-schedule')
+const http = require('http')
+const schedule = require('node-schedule')
 const drivers = require('./models/Drivers');
 const riders = require('./models/Riders');
 const pairs = require('./models/Pairs');
 
-const io = require('socket.io')(http)
+const job = schedule.scheduleJob('*/5 * * * * *', function(){
+        makePair();
+});
 
-io.of('communication').on('connection', (socket)=>{
-    const job = sch.scheduleJob('*/5 * * * * *', function(){
-        makePair(socket);
-    });
-})
-
-function makePair(socket) {
+function makePair() {
     let rIn = -1;
         let dIn = -1;
         riders.forEach((rider) => {
@@ -45,6 +41,7 @@ function makePair(socket) {
                   };
               
                   pairs.push(pair);
+                  doCommunicate(pair);
                   console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Toatl cost = ${pair.cost}`);
                   drivers.splice(mdIn, 1);
                   riders.splice(rIn, 1);
@@ -52,25 +49,31 @@ function makePair(socket) {
             }
 
         })
-        socket.emit("welcome",pairs);
         pairs.length = 0;
 }
 
-// //Create Connection
-// const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'iit123',
-//     database: 'ride_share'
-// });
+function doCommunicate(pair) {
+    
+    const postRiderRequest = {
+        hostname: 'localhost',
+        port: 5002,
+        path: '/api/communication',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    
+    const reqComminication = http.request(postRiderRequest, res => {
+        console.log(`statusCode: ${res.statusCode} `)
+    
+    }).on("error", (err) => {
+        console.log("Error: ", err.message);
+    })
+    reqComminication.write(JSON.stringify(pair));
+    reqComminication.end();
 
-// //Connect 
-// db.connect((err) => {
-//     if(err) {
-//         throw err;
-//     }
-//     console.log('MySql connected...');
-// });
+}
 
 const logger = (req, res, next) => {
     // console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
@@ -85,32 +88,8 @@ app.use('/api', require('./routes/root'));
 app.use('/api', require('./routes/driver'));
 app.use('/api', require('./routes/rider'));
 
-// //Store Rating
-// app.post('/api/ratings', (req, res) => {
-
-//     let  driverName = req.body.name
-//     let car= req.body.car
-//     let rating= req.body.rating
-
-// let query = "INSERT INTO ratings (name, car, rating) VALUES ( ?, ?, ?)";
-// // let query = "INSERT INTO ratings SET ?";
-// db.query(query, [driverName, car, rating], (err, result) => {
-//     if(err) 
-//         throw err;
-
-// })
-// console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
-// res.send('Driver Rating Stored');
-// });
-
-
-// const Sckt = 5001;
 const PORT = process.env.PORT || 5000;
 
-// http.listen(Sckt,()=>{
-//     console.log(`Socket Running on ${Sckt}`);
-// })
-
-http.listen(PORT, () => {
-    console.log(`Server and Socket Running on port: ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server Running on port: ${PORT}`);
 });
