@@ -2,7 +2,8 @@ const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
-const http = require('http').createServer()
+const app = express();
+const http = require('http').createServer(app)
 const sch = require('node-schedule')
 const drivers = require('./models/Drivers');
 const riders = require('./models/Riders');
@@ -13,12 +14,13 @@ const io = require('socket.io')(http)
 io.of('communication').on('connection', (socket)=>{
     console.log("new user connected")
     const job = sch.scheduleJob('*/5 * * * * *', function(){
-        var matchedDriverIndex;
-    
-        var distance = Number.MAX_VALUE;
-        let rIn = -1;
-        let dIn = -1;
+        makePair(socket);
+    });
+})
 
+function makePair(socket) {
+    let rIn = -1;
+        let dIn = -1;
         riders.forEach((rider) => {
             rIn +=1;
             let mdIn;
@@ -52,8 +54,8 @@ io.of('communication').on('connection', (socket)=>{
 
         })
         socket.emit("welcome",pairs);
-    });
-})
+        pairs.length = 0;
+}
 
 //Create Connection
 const db = mysql.createConnection({
@@ -71,8 +73,6 @@ db.connect((err) => {
     console.log('MySql connected...');
 });
 
-const app = express();
-
 const logger = (req, res, next) => {
     // console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
     next();
@@ -86,14 +86,32 @@ app.use('/api', require('./routes/root'));
 app.use('/api', require('./routes/driver'));
 app.use('/api', require('./routes/rider'));
 
+//Store Rating
+app.post('/api/ratings', (req, res) => {
 
-const Sckt = 5001;
+   let  driverName = req.body.name
+    let car= req.body.car
+    let rating= req.body.rating
+
+let query = "INSERT INTO ratings (name, car, rating) VALUES ( ?, ?, ?)";
+// let query = "INSERT INTO ratings SET ?";
+db.query(query, [driverName, car, rating], (err, result) => {
+    if(err) 
+        throw err;
+
+})
+console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
+res.send('Driver Rating Stored');
+});
+
+
+// const Sckt = 5001;
 const PORT = process.env.PORT || 5000;
 
-http.listen(Sckt,()=>{
-    console.log(`Socket Running on ${Sckt}`);
-})
+// http.listen(Sckt,()=>{
+//     console.log(`Socket Running on ${Sckt}`);
+// })
 
-app.listen(PORT, () => {
-    console.log(`Server Running on port: ${PORT}`);
+http.listen(PORT, () => {
+    console.log(`Server and Socket Running on port: ${PORT}`);
 });

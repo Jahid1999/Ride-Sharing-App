@@ -28,26 +28,6 @@ router.get('/createDriverRatingTable', (req, res) => {
     })
 });
 
-//Store Rating
-router.post('/ratings', (req, res) => {
-    let a = {
-        name: 'A',
-        car: 'B',
-        rating: 4.00,
-    }
-
-
-    // let query = "INSERT INTO ratings (name, car, rating) VALUES ( ?, ?, ?)";
-    let query = "INSERT INTO ratings SET ?";
-    db.query(query, a, (err, result) => {
-        if(err) 
-            throw err;
-        console.log(result);
-        res.send('Rating Created');
-    })
-    res.send('Rating Created');
-});
-
 // Get Drivers
 router.get('/drivers', (req, res) => {
     res.status(200).json(drivers);
@@ -58,7 +38,7 @@ router.post('/driver', (req, res) => {
     const newDriver = {
         id: uuid.v4(),
         name: req.body.name,
-        car: req.body.name,
+        car: req.body.car,
         currentX: req.body.currentX,
         currentY:req.body.currentY,
     }
