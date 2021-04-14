@@ -18,18 +18,18 @@ app.use(express.urlencoded({ extended: false}));
 let storeSocket;
 
 io.of('communication').on('connection', (socket)=>{
-    console.log("new user connected")
     storeSocket = socket
 })
 
 app.post('/api/communication', (req,res)=>{
+    // console.log('Ashce');
     storeSocket.emit("notify_client",req.body);
 })
 
 const PORT = process.env.PORT || 5003;
 
-app.listen(5002, () => {
-    console.log(`Server Running on port: 5002`);
+http.listen(5002, () => {
+    console.log(`Socket Running on port: 5002`);
 });
 
 app.listen(PORT, () => {

@@ -23,7 +23,7 @@ function riderRequest() {
     
     const postRiderRequest = {
         hostname: 'localhost',
-        port: 5000,
+        port: 7000,
         path: '/api/rider',
         method: 'POST',
         headers: {
@@ -61,7 +61,7 @@ function driverRequest() {
     
     const postDriverRequest = {
         hostname: 'localhost',
-        port: 5000,
+        port: 7000,
         path: '/api/driver',
         method: 'POST',
         headers: {
@@ -98,8 +98,8 @@ function giveRating(pair) {
     
     const postRatingrRequest = {
         hostname: 'localhost',
-        port: 5001,
-        path: '/api/ratings',
+        port: 7000,
+        path: '/rating',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

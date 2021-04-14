@@ -56,7 +56,7 @@ function doCommunicate(pair) {
     
     const postRiderRequest = {
         hostname: 'localhost',
-        port: 5002,
+        port: 5003,
         path: '/api/communication',
         method: 'POST',
         headers: {

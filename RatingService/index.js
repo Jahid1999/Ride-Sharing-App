@@ -1,26 +1,18 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
-const mysql = require('mysql');
-const path = require('path');
+const mongoose = require('mongoose')
+const url = 'mongodb://localhost/distributedSystemAssignment'
 const app = express();
-// const http = require('http').createServer(app)
+const Rating = require('./models/Rating')
 
 
 //Create Connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'iit123',
-    database: 'ride_share'
-});
+mongoose.connect(url, {useNewUrlParser:true,useUnifiedTopology:true})
+const con = mongoose.connection
 
-//Connect 
-db.connect((err) => {
-    if(err) {
-        throw err;
-    }
-    console.log('MySql connected...');
-});
+con.on('open',function (){
+    console.log('Connection established with mongodb...')
+})
 
 const logger = (req, res, next) => {
     // console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}}`);
@@ -33,22 +25,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
 //Store Rating
-app.post('/api/ratings', (req, res) => {
-
-    let  driverName = req.body.name
-    let car= req.body.car
-    let rating= req.body.rating
-
-let query = "INSERT INTO ratings (name, car, rating) VALUES ( ?, ?, ?)";
-// let query = "INSERT INTO ratings SET ?";
-db.query(query, [driverName, car, rating], (err, result) => {
-    if(err) 
-        throw err;
-
+app.post('/rating',async (req,res)=>{
+    console.log('Ashce');
+    const rating = new Rating({
+        name: req.body.driverName,
+        car: req.body.car,
+        rating: req.body.rating,
+    })
+    try{
+        const  result = await rating.save()
+        console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
+        res.send('Driver Rating Stored');
+    }catch (err){
+        res.send('Error' + err)
+    }
 })
-console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
-res.send('Driver Rating Stored');
-});
+
 
 
 // const Sckt = 5001;
