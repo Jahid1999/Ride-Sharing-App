@@ -26,19 +26,20 @@ app.use(express.urlencoded({ extended: false}));
 
 //Store Rating
 app.post('/rating',async (req,res)=>{
-    console.log('Ashce');
+    console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
     const rating = new Rating({
         name: req.body.driverName,
         car: req.body.car,
         rating: req.body.rating,
+    });
+
+    rating.save()
+    .then((result) => {
+        res.send(result)
     })
-    try{
-        const  result = await rating.save()
-        console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
-        res.send('Driver Rating Stored');
-    }catch (err){
-        res.send('Error' + err)
-    }
+    .catch((err) => {
+        console.log(err)
+    });
 })
 
 
