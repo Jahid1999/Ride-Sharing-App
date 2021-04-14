@@ -3,17 +3,14 @@ const mongoose = require('mongoose')
 
 const ratingSchema = new mongoose.Schema({
 
-    name:{
+    driverName:{
         type: String,
-        required: true
     },
     car:{
         type: String,
-        required: true
     },
     rating:{
         type:Number,
-        required: false
     }
 
 })
