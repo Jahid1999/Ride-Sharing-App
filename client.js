@@ -1,6 +1,5 @@
 const io = require('socket.io-client')
 const http = require('http')
-const riders = require('./models/Riders');
 const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
@@ -99,7 +98,7 @@ function giveRating(pair) {
     
     const postRatingrRequest = {
         hostname: 'localhost',
-        port: 5000,
+        port: 5001,
         path: '/api/ratings',
         method: 'POST',
         headers: {
@@ -129,7 +128,7 @@ function giveRating(pair) {
 
 socket.on('welcome',(data)=>{
     data.forEach(pair => {
-        console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Total fare = ${pair.cost}`);
+        console.log(`Rider ${pair.riderName} matches with driver ${pair.driverName}, car number ${pair.carNumber}. Total cost = ${pair.cost}`);
         giveRating(pair);
     });
     
