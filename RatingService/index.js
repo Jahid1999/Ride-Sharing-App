@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false}));
 app.post('/rating',async (req,res)=>{
     console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
     const rating = new Rating({
-        driverName: req.body.driverName,
+        driverName: req.body.name,
         car: req.body.car,
         rating: req.body.rating,
     });
