@@ -1,7 +1,7 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const mongoose = require('mongoose')
-const url = 'mongodb://localhost/distributedSystemAssignment'
+const url = 'mongodb://172.17.0.1:27017/distributedSystemAssignment'
 const app = express();
 const Rating = require('./models/Rating')
 

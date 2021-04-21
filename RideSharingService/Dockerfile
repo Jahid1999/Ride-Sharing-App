@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 5000
 
 # Run project
-CMD [ "npm", "dev" ]
+CMD [ "npm", "run", "dev" ]

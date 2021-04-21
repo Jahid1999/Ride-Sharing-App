@@ -55,8 +55,8 @@ function makePair() {
 function doCommunicate(pair) {
     
     const postRiderRequest = {
-        hostname: 'localhost',
-        port: 5003,
+        hostname: '192.168.0.103',
+        port: 5002,
         path: '/api/communication',
         method: 'POST',
         headers: {
