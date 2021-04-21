@@ -3,13 +3,38 @@
 A repository for implementing a **Ride Sharing** app and to make it work as a **Distributed System** . It is a group project for academic purpose.
 
 **Developers:**
-
-   [Yasin Sazid](https://github.com/bsse1006) (BSSE 1006)
-		
-   [Atkia Akila Karim](https://github.com/atkia) (BSSE 1015)
 		
    [Abdullah-Al-Jahid](https://github.com/Jahid1999) (BSSE 1030)
 
 
-**Technology Used:** Node.js , Express.js, Socket.IO for backend.
+**Technology Used:** 
+
+1.Node.js,
+
+2.Express.js,
+
+3.Socket.IO,
+
+4.Node Schedule,
+
+5.Http .
+
+# Nginx Conf
+
+server {
+
+	listen 7000;
+	
+	listen [::]:7000;
+	
+	location /api {
+		proxy_pass http://127.0.0.1:5000;
+	}
+	
+	location /rating {
+		proxy_pass http://127.0.0.1:5001;
+	}
+
+}
+
 
