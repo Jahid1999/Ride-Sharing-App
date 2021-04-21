@@ -36,3 +36,17 @@ server {
 	}
 
 }
+
+# Containarization
+
+To **build** a docker image, go to the specific service folder and run the following command:
+
+`sudo docker build -t <container-name>:latest .`
+
+To **run** a cotainer/ docker image and bind run the following command:
+
+`sudo docker run -p <host_port>:<container_port> <docker_image_name>`
+
+**Changes in /etc/mongod.conf file:** 
+For storing ratings  in mongodb located in host machine from container you have to change the `bindIp` to
+`bindIp:0.0.0.0` from `bindIp:127.0.0.1`
