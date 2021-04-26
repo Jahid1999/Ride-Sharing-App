@@ -50,3 +50,5 @@ To **run** a cotainer/ docker image and bind run the following command:
 **Changes in /etc/mongod.conf file:** 
 For storing ratings  in mongodb located in host machine from container you have to change the `bindIp` to
 `bindIp:0.0.0.0` from `bindIp:127.0.0.1`
+
+Used 172.17.0.1 for internal communication among containers and host machine under a private network
