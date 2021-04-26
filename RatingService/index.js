@@ -1,7 +1,7 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const mongoose = require('mongoose')
-const url = 'mongodb://localhost/distributedSystemAssignment'
+const url = 'mongodb://172.17.0.1:27017/distributedSystemAssignment'
 const app = express();
 const Rating = require('./models/Rating')
 
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false}));
 app.post('/rating',async (req,res)=>{
     console.log(`Driver ${req.body.name} got a rating of ${req.body.rating}.`);
     const rating = new Rating({
-        driverName: req.body.driverName,
+        driverName: req.body.name,
         car: req.body.car,
         rating: req.body.rating,
     });

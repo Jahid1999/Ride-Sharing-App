@@ -1,7 +1,7 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const app = express();
-const http = require('http').createServer()
+const http = require('http').createServer(app)
 const sch = require('node-schedule')
 const io = require('socket.io')(http)
 
@@ -29,9 +29,9 @@ app.post('/api/communication', (req,res)=>{
 const PORT = process.env.PORT || 5003;
 
 http.listen(5002, () => {
-    console.log(`Socket Running on port: 5002`);
+    console.log(`Socket & Server Running on port: 5002`);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server Running on port: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server Running on port: ${PORT}`);
+// });
