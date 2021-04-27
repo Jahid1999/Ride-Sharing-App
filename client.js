@@ -4,7 +4,7 @@ const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let socket = io.connect('http://localhost:5002/communication')
+let socket = io.connect('http://localhost:5001/communication')
 
 const job = sch.scheduleJob('*/1 * * * * *', function(){
     riderRequest();
@@ -44,7 +44,7 @@ function riderRequest() {
         });
     
     }).on("error", (err) => {
-        console.log("Error: ", err.message);
+        console.log("Error in Rider Request");
     })
     reqRider.write(requestData);
     reqRider.end();
@@ -82,7 +82,7 @@ function driverRequest() {
         });
     
     }).on("error", (err) => {
-        console.log("Error: ", err.message);
+        console.log("Error in Driver Request");
     })
     reqDriver.write(requestData);
     reqDriver.end();
@@ -119,7 +119,7 @@ function giveRating(pair) {
         });
     
     }).on("error", (err) => {
-        console.log("Error: ", err.message);
+        console.log("Error in Rating Request");
     })
     reqRating.write(requestData);
     reqRating.end();

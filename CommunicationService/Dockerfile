@@ -17,7 +17,7 @@ RUN npm i
 COPY . .
 
 # Expose or make visible this port outside of container
-EXPOSE 5002
+# EXPOSE 5002
 
 # Run project
 CMD [ "npm", "start" ]
