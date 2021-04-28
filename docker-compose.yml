@@ -16,6 +16,8 @@ services:
     ride-sharing-service:
         build: ./RideSharingService/
         restart: always
+        depends_on: 
+            - communication-service
 
     nginx:
         build: ./nginx/
