@@ -25,7 +25,6 @@ services:
             - 7000:80
         depends_on: 
             - rating-service
-            - communication-service
             - ride-sharing-service
 
     mongodb:
