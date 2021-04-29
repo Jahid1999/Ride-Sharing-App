@@ -50,3 +50,18 @@ To **run** a cotainer/ docker image and bind run the following command:
 **Changes in /etc/mongod.conf file:** 
 For storing ratings  in mongodb located in host machine from container you have to change the `bindIp` to
 `bindIp:0.0.0.0` from `bindIp:127.0.0.1`
+
+# Docker Compose:
+
+Hence, we added a docker compose, now we can build and run all the docker images by a single command.
+
+To **build** all the docker images, go to the project folder and run `sudo docker-compose build` .
+
+To **run** all the docker images, go to the project folder and run `sudo docker-compose up` .
+
+# Client
+
+**Run:** node client.js .
+
+`# Thank You`
+ 

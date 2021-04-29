@@ -1,7 +1,7 @@
 const { POINT_CONVERSION_COMPRESSED } = require('constants');
 const express = require('express');
 const mongoose = require('mongoose')
-const url = 'mongodb://172.17.0.1:27017/distributedSystemAssignment'
+const url = 'mongodb://mongodb:27017/distributedSystemAssignment'
 const app = express();
 const Rating = require('./models/Rating')
 
@@ -43,9 +43,7 @@ app.post('/rating',async (req,res)=>{
 })
 
 
-
-// const Sckt = 5001;
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 // http.listen(Sckt,()=>{
 //     console.log(`Socket Running on ${Sckt}`);

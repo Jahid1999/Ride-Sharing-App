@@ -1,0 +1,40 @@
+version: '3'
+
+services: 
+    rating-service:
+        build: ./RatingService/
+        restart: always
+        depends_on: 
+            - mongodb
+
+    communication-service:
+        build: ./CommunicationService/
+        ports: 
+            - 5001:5001
+        restart: always
+    
+    ride-sharing-service:
+        build: ./RideSharingService/
+        restart: always
+        depends_on: 
+            - communication-service
+
+    nginx:
+        build: ./nginx/
+        ports: 
+            - 7000:80
+        depends_on: 
+            - rating-service
+            - ride-sharing-service
+
+    mongodb:
+        image: mongo
+        ports: 
+            - 27017:27017
+        volumes:
+            - mongodb_data_container:/data/db
+    
+volumes:
+    mongodb_data_container:
+    
+    
