@@ -30,6 +30,8 @@ services:
         restart: always
         depends_on: 
             - communication-service-dhaka
+        environment: 
+            - SERVERLOCATION=dhaka
         networks:
             bdnet:
                 ipv4_address: 10.100.0.12
@@ -63,6 +65,8 @@ services:
         restart: always
         depends_on: 
             - communication-service-dhaka
+        environment: 
+            - SERVERLOCATION=chittagong
         networks:
             bdnet:
                 ipv4_address: 10.100.0.22

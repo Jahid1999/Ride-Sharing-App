@@ -9,7 +9,7 @@ const drivers = require('./models/Drivers');
 const riders = require('./models/Riders');
 const pairs = require('./models/Pairs');
 
-let server_location = '';
+let server_location = process.env.SERVERLOCATION;
 
 const job = schedule.scheduleJob('*/5 * * * * *', function(){
         makePair();
