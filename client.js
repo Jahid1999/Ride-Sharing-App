@@ -4,7 +4,45 @@ const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let socket = io.connect('http://localhost:5001/communication')
+let server_location = 'dhaka';
+
+// let socket = io.connect('http://localhost:5001/communication')
+
+let socket = io.connect(`http://communication.${server_location}.com:5001/communication`)
+
+requestData = JSON.stringify({
+    name: server_location   
+});
+
+
+const serverRequest = {
+    hostname: `server.${server_location}.com`,
+    // port: 7000,
+    path: '/api/setserver',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': requestData.length
+    }
+};
+
+const reqServer = http.request(serverRequest, res => {
+    let requestData = '';
+
+    res.on('data', (chunk) => {
+        requestData += chunk;
+    });
+
+    res.on('end', () => {
+        // console.log(`Rider ${requestData.name} is looking for a Driver....`);
+    });
+
+}).on("error", (err) => {
+    console.log("Error in Server Request");
+})
+reqServer.write(requestData);
+reqServer.end();
+
 
 const job = sch.scheduleJob('*/1 * * * * *', function(){
     riderRequest();
@@ -22,8 +60,8 @@ function riderRequest() {
     
     
     const postRiderRequest = {
-        hostname: 'localhost',
-        port: 7000,
+        hostname: `server.${server_location}.com`,
+        // port: 7000,
         path: '/api/rider',
         method: 'POST',
         headers: {
@@ -60,8 +98,8 @@ function driverRequest() {
     
     
     const postDriverRequest = {
-        hostname: 'localhost',
-        port: 7000,
+        hostname: `server.${server_location}.com`,
+        // port: 7000,
         path: '/api/driver',
         method: 'POST',
         headers: {
@@ -97,8 +135,8 @@ function giveRating(pair) {
     
     
     const postRatingrRequest = {
-        hostname: 'localhost',
-        port: 7000,
+        hostname: `server.${server_location}.com`,
+        // port: 7000,
         path: '/rating',
         method: 'POST',
         headers: {

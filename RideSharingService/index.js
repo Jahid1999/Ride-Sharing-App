@@ -9,6 +9,8 @@ const drivers = require('./models/Drivers');
 const riders = require('./models/Riders');
 const pairs = require('./models/Pairs');
 
+let server_location = '';
+
 const job = schedule.scheduleJob('*/5 * * * * *', function(){
         makePair();
 });
@@ -55,7 +57,7 @@ function makePair() {
 function doCommunicate(pair) {
     
     const postRiderRequest = {
-        hostname: 'communication-service',
+        hostname: `communication-service-${server_location}`,
         port: 5000,
         path: '/api/communication',
         method: 'POST',
@@ -87,6 +89,12 @@ app.use(express.urlencoded({ extended: false}));
 app.use('/api', require('./routes/root'));
 app.use('/api', require('./routes/driver'));
 app.use('/api', require('./routes/rider'));
+
+app.post('/api/setserver', (req, res) => {
+    server_location = req.body.name;
+    console.log('Server Set Request');
+    res.send('Successful');
+})
 
 const PORT = process.env.PORT || 5000;
 
