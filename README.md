@@ -59,6 +59,18 @@ To **build** all the docker images, go to the project folder and run `sudo docke
 
 To **run** all the docker images, go to the project folder and run `sudo docker-compose up` .
 
+# GEO Distributed:
+
+**Fake DNS:** If you are on ubuntu go to `/etc/hosts` and add the fake domain namesas follows.
+
+10.100.0.10 server.dhaka.com
+
+10.100.0.20 server.chittagong.com
+
+10.100.0.11 communication.dhaka.com
+
+10.100.0.21 communication.chittagong.com
+
 # Client
 
 **Run:** node client.js .
