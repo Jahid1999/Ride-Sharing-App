@@ -1,0 +1,12 @@
+server {
+	listen 80;
+	listen [::]:80;
+	
+	location /api {
+		proxy_pass http://${API_V1}:5000;
+	}
+	
+	location /rating {
+		proxy_pass http://${API_V2}:5000;
+	}
+}

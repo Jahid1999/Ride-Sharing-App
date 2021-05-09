@@ -4,7 +4,7 @@ const sch = require('node-schedule');
 const { match } = require('assert');
 const Str = require('@supercharge/strings')
 
-let server_location = 'dhaka';
+let server_location = 'chittagong';
 
 // let socket = io.connect('http://localhost:5001/communication')
 
